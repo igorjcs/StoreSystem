@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Listar Produtos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            margin-right: 8px;
+            color: #337ab7;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Produtos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Categoria</th>
+        <th>Estoque</th>
+        <th>COD Barras</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody th:each="produto : ${listaProdutos}">
+    <tr>
+        <td th:text="${produto.id}">Id</td>
+        <td th:text="${produto.nome}">Descrição</td>
+        <td th:text="${produto.preco}">Preço</td>
+        <td th:text="${produto.categoria}">Categoria</td>
+        <td th:text="${produto.quantidadeEmEstoque}">Estoque atual</td>
+        <td th:text="${produto.codigoDeBarras}">COD</td>
+        <td>
+            <a th:href="@{/editarProduto/{id}(id=${produto.id})}">Editar</a>
+            <a th:href="@{/removerProduto/{id}(id=${produto.id})}"
+               onclick="return confirm('Tem certeza que deseja remover este produto?');">Remover</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
