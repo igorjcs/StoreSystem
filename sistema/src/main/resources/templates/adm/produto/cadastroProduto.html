@@ -3,57 +3,91 @@
       xmlns:th="https://thymeLeaf.org"
       xmlns:layout="https://www.ultraq.net.nz/thymeLeaf/Layout">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Produto</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
 </head>
-
 <body>
-<form action="/salvarProduto"
-      th:object="${produto}"
-      method="POST"
-      class="container mt-4">
-    <input type="hidden" th:field="*{id}"/>
 
-    <div class="form-group">
-        <label for="nome">Nome do produto</label>
-        <input type="text" th:field="*{nome}" id="nome" class="form-control" required/>
-    </div>
+<div class="container">
 
-    <div class="form-group">
-        <label for="preco">Preço do produto</label>
-        <input type="number" th:field="*{preco}" id="preco" class="form-control" step="0.01" required/>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="https://img.freepik.com/vetores-premium/fundo-preto-do-logotipo-da-engrenagem-automatica_681147-402.jpg" width="30" height="30" alt="">
+            <a class="navbar-brand" href="#">Sistema de Estoque</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="form-group">
-        <label for="quantidade">Quantidade do produto</label>
-        <input type="number" th:field="*{quantidadeEmEstoque}" id="quantidade" class="form-control" required/>
-    </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+            </div>
+    </nav>
+</div>
 
-    <div class="form-group">
-        <label for="categoria">Categoria</label>
-        <select id="categoria" th:field="*{categoria}" class="form-control" required>
-            <option value="">Selecione</option>
-            <option value="alimentos">Alimentos</option>
-            <option value="bebidas">Bebidas</option>
-            <option value="limpeza">Limpeza</option>
-            <option value="higiene">Higiene</option>
-        </select>
-    </div>
+<div class="row">
+    <form action="/salvarProduto"
+          th:object="${produto}"
+          method="POST"
+          class="container mt-4">
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" readonly="true" class="form-control" id="id" th:field="*{id}">
 
-    <div class="form-group">
-        <label for="codigoDeBarras">Código de barras do produto</label>
-        <input type="number" th:field="*{codigoDeBarras}" id="codigoDeBarras" class="form-control" required/>
-    </div>
+            <label for="nome">Produto:</label>
+            <input type="text" class="form-control" id="nome" th:field="*{nome}">
+            <small id="emailHelp" class="form-text text-muted">Antes de cadastrar, verifique se o produto já existe.</small>
 
-    <button type="submit" class="btn btn-primary">Salvar Produto</button>
-</form>
+            <label for="preco">Preço</label>
+            <input type="number" class="form-control" id="preco" th:field="*{preco}" step="0.01">
 
-<!-- Inclua os scripts do Bootstrap e do jQuery aqui -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+            <label for="quantidade">Quantidade</label>
+            <input type="number" class="form-control" id="quantidade" th:field="*{quantidadeEmEstoque}">
+
+            <label for="categoria">Categoria</label>
+            <select class="form-control" id="categoria" th:field="*{categoria}">
+                <option value="">Selecione</option>
+                <option value="alimentos">Alimentos</option>
+                <option value="bebidas">Bebidas</option>
+                <option value="limpeza">Limpeza</option>
+                <option value="higiene">Higiene</option>
+            </select>
+
+            <label for="codigoDeBarras">Código de barras</label>
+            <input type="text" class="form-control" id="codigoDeBarras" th:field="*{codigoDeBarras}">
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="/adm" class="btn btn-danger">Voltar</a>
+    </form>
+
+</div>
+
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+-->
 </body>
 </html>
