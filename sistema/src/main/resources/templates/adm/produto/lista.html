@@ -8,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css" />
+
 
     <title>Listar Produtos</title>
     <style>
@@ -24,6 +27,14 @@
         th {
             background-color: #f2f2f2;
         }
+
+        th:nth-child(2), td:nth-child(2) {
+            width: 30%;
+        }
+        th:nth-child(7), td:nth-child(7) {
+            width: 10%;
+        }
+
         a {
             margin-right: 8px;
             color: #337ab7;
@@ -32,16 +43,19 @@
         a:hover {
             text-decoration: underline;
         }
+
+
+
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img src="https://img.freepik.com/vetores-premium/fundo-preto-do-logotipo-da-engrenagem-automatica_681147-402.jpg" width="30" height="30" alt="">
-            <a class="navbar-brand" href="#">Sistema de Estoque</a>
+            <a class="navbar-brand" href="/adm">Sistema de Estoque</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -49,20 +63,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/cadastroProduto">Cadastrar<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
+
                 </ul>
             </div>
     </nav>
 
 </div>
 
-<div class="row">
- <h1>Lista de Produtos</h1>
- <table>
+<div class="container mt-4">
+ <h1 class="text-center">Lista de Produtos</h1>
+ <table class="table" id="tabela">
     <thead>
     <tr>
         <th>ID</th>
@@ -74,22 +86,35 @@
         <th>Ações</th>
     </tr>
     </thead>
-    <tbody th:each="produto : ${listaProdutos}">
-    <tr>
+    <tbody>
+    <tr  th:each="produto : ${listaProdutos}">
         <td th:text="${produto.id}">Id</td>
         <td th:text="${produto.nome}">Descrição</td>
-        <td th:text="${produto.preco}">Preço</td>
+        <td th:text="${#numbers.formatCurrency(produto.preco)}">Preço</td>
         <td th:text="${produto.categoria}">Categoria</td>
         <td th:text="${produto.quantidadeEmEstoque}">Estoque atual</td>
         <td th:text="${produto.codigoDeBarras}">COD</td>
         <td>
-            <a th:href="@{/editarProduto/{id}(id=${produto.id})}">Editar</a>
+            <a th:href="@{/editarProduto/{id}(id=${produto.id})}"><i class="fa-duotone fa-solid fa-pen-to-square" style="--fa-primary-color: black; --fa-secondary-color: black;"></i></a>
             <a th:href="@{/removerProduto/{id}(id=${produto.id})}"
-               onclick="return confirm('Tem certeza que deseja remover este produto?');">Remover</a>
+               onclick="return confirm('Tem certeza que deseja remover este produto?');"><i class="fa-duotone fa-solid fa-trash-can" style="--fa-primary-color: danger; --fa-secondary-color: danger;"></i></a>
         </td>
     </tr>
     </tbody>
  </table>
+        <a href="/adm" class="btn btn-danger">Voltar</a>
 </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/2.1.5/js/dataTables.js"></script>
+    <script>$(document).ready( function () {
+            $('#tabela').DataTable({
+                "language": {
+                url: 'https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json',
+                }
+                });
+            });
+    </script>
 </body>
 </html>
